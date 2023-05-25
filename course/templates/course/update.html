@@ -1,0 +1,29 @@
+{% extends 'course/base.html' %}
+
+{% block title %}
+<title>Update</title>
+
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="alert alert-dark text-center">Time for an update! Update your task now.</p>
+      {% if messages %}
+      {% for message in messages %}
+          <p{% if message.tags %} role="alert" class=" alert alert-success {{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
+      {% endif %}
+      <form action="" method="post">
+        {% csrf_token %} {{form.as_p}}
+
+        <input type="submit" value="Update" class="btn btn-outline-dark" />
+        <a href="{% url 'home' %}" class="btn btn-outline-info" >Back To Home</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

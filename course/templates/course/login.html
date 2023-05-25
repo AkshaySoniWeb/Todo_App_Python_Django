@@ -1,0 +1,42 @@
+{% extends 'course/base.html' %}
+{% block title %}
+<title>Login</title>
+
+{% endblock title %}
+
+<div class="container">
+  {% block content %}
+  <div class="row">
+    <div class="col-sm-4">
+      {% if messages %}
+      {% for message in messages %}
+          <p{% if message.tags %} role="alert" class=" alert alert-success {{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
+      {% endif %}
+       
+      <h5 class="alert alert-dark text-center">Login</h5>
+      <form action="" method="post" novalidate>
+        {% csrf_token %} {% if form.non_field_errors %} 
+
+        {% for error in form.non_field_errors %}
+
+        <p class="er">{{error}}</p>
+
+        {% endfor %} 
+        {% endif %} 
+        
+        {% for fm in form %} {{fm.label_tag}}
+        <small>{{fm}}</small> {{fm.errors|striptags}} <br /><br />
+
+        {% endfor %}
+
+        <input class="btn btn-outline-success" type="submit" value="Login"/><br />
+
+      </form> 
+      <a href="{% url 'signup' %}" class="btn btn-outline-dark mt-3">Signup</a>
+
+    </div>
+
+  </div>
+  {% endblock content %}
+</div>

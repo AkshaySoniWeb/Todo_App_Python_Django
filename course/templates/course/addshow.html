@@ -1,0 +1,94 @@
+{% extends 'course/base.html' %} {% load static %} 
+{% block title %}
+    <title>Display</title>
+    {% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="alert alert-dark text-center">Welcome to our community, <strong>{{name | capfirst}}</strong> </p>
+      {% if messages %}
+      {% comment %} <ul class="messages"> {% endcomment %}
+      {% for message in messages %}
+          <p{% if message.tags %} role="alert" class=" alert alert-success {{ message.tags }}"{% endif %}>{{ message }}</p>
+      {% endfor %}
+       {% comment %} </ul> {% endcomment %}
+      {% endif %}
+      <form action="" method="post" novalidate>
+        {% csrf_token %} {{form.as_p}}
+
+        <input type="submit" value="Add To-do" class="btn btn-outline-success" />
+      </form>
+    </div>
+    <div class="col-sm-7 offset-1">
+      <h5 class="alert alert-dark text-center">Take a moment to review your to-do's.</h5>
+
+      <form class="d-flex form-inline" method="get">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="search"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+      {% if st %}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Key</th>
+            <th scope="col">Comments</th>
+            <th scope="col">Active</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in st %}
+          <tr>
+            <th scope="row">{{data.id}}</th>
+            <td>{{data.title}}</td>
+            <td>{{data.key}}</td>
+            <td>{{data.details}}</td>
+            <td>{{data.active}}</td>
+            <td>
+              <a href="{% url 'update' data.id %}" class="btn btn-info">Edit</a>
+              <form action="{% url 'delete' data.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                 <input type="Submit" value="Delete" class="btn btn-danger d-inline " id="delete"/>
+              </form>
+            </td>
+          </tr>
+         
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %} 
+      <br>
+      <p role="alert" class=" alert alert-warning text-center">We couldn't find any data matching your search.</p>
+      
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <a href="{% url 'update' data.id %}" class="btn btn-info"> <i class="bi bi-pencil-fill"> </i> Edit </a> {% endcomment %}

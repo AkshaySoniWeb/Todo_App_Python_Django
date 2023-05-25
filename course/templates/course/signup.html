@@ -1,0 +1,27 @@
+{% extends 'course/base.html' %} 
+
+{% block title %}
+<title>Signup</title>
+
+{% endblock title %}
+
+<div class="container">
+  {% block content %}
+  <div class="row">
+    <div class="col-sm-4">
+      <h5 class="alert alert-dark text-center">Create Your Account</h5>
+      <form action="" method="post" novalidate>
+        {% csrf_token %} {% for fm in form %} {{fm.label_tag}}
+        <small>{{fm}}</small> {{fm.errors|striptags}} {% endfor %} <br />
+
+        <input
+          class="btn btn-outline-success mt-3"
+          type="submit"
+          value="Signup"
+        />
+      </form>
+      <a href="{% url 'login' %}" class="btn btn-outline-dark mt-3">Login</a>
+    </div>
+  </div>
+  {% endblock content %}
+</div>
